@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Buvette UCC - Historique</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="app-header">
+    <button id="btn-back" class="btn-icon" title="Retour">&#8592;</button>
+    <h1>Historique</h1>
+    <div class="header-actions"></div>
+  </header>
+
+  <div class="history-summary">
+    <span>Total : <strong id="history-total">0,00 &euro;</strong></span>
+    <button id="btn-export" class="btn btn-primary btn-small">Exporter CSV</button>
+  </div>
+
+  <div id="orders-list" class="orders-list"></div>
+
+  <!-- Edit modal -->
+  <div id="modal-edit" class="modal" hidden>
+    <div class="modal-content modal-large">
+      <h2>Modifier la commande <span id="edit-order-id"></span></h2>
+      <div id="edit-items" class="edit-items"></div>
+      <p class="modal-total">Total : <strong id="edit-total"></strong></p>
+      <div class="modal-actions">
+        <button id="edit-cancel" class="btn btn-secondary">Annuler</button>
+        <button id="edit-delete" class="btn btn-danger">Supprimer</button>
+        <button id="edit-save" class="btn btn-success">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/history.js"></script>
+</body>
+</html>

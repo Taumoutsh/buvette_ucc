@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Buvette UCC - Options</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="app-header">
+    <button id="btn-back" class="btn-icon" title="Retour">&#8592;</button>
+    <h1>Options</h1>
+    <div class="header-actions"></div>
+  </header>
+
+  <!-- Tabs: Plats / Menus -->
+  <div class="category-tabs">
+    <button class="tab active" data-tab="plates">Plats</button>
+    <button class="tab" data-tab="menus">Menus</button>
+  </div>
+
+  <!-- Plates section -->
+  <div id="section-plates" class="options-section">
+    <div id="plates-list" class="options-list"></div>
+    <button id="btn-add-plate" class="btn btn-primary btn-block">+ Ajouter un plat</button>
+  </div>
+
+  <!-- Menus section -->
+  <div id="section-menus" class="options-section" hidden>
+    <div id="menus-list" class="options-list"></div>
+    <button id="btn-add-menu" class="btn btn-primary btn-block">+ Ajouter un menu</button>
+  </div>
+
+  <!-- Plate modal -->
+  <div id="modal-plate" class="modal" hidden>
+    <div class="modal-content">
+      <h2 id="plate-modal-title">Ajouter un plat</h2>
+      <input type="hidden" id="plate-id">
+      <div class="form-group">
+        <label for="plate-name">Nom</label>
+        <input type="text" id="plate-name" placeholder="Nom du plat" required>
+      </div>
+      <div class="form-group">
+        <label for="plate-price">Prix (&euro;)</label>
+        <input type="number" id="plate-price" step="0.10" min="0" placeholder="0.00" required>
+      </div>
+      <div class="form-group">
+        <label for="plate-category">Catégorie</label>
+        <select id="plate-category">
+          <option value="food">Nourriture</option>
+          <option value="beverage">Boisson</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="plate-color">Couleur</label>
+        <input type="color" id="plate-color" value="#ffffff">
+      </div>
+      <div class="modal-actions">
+        <button id="plate-cancel" class="btn btn-secondary">Annuler</button>
+        <button id="plate-save" class="btn btn-success">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu modal -->
+  <div id="modal-menu" class="modal" hidden>
+    <div class="modal-content">
+      <h2 id="menu-modal-title">Ajouter un menu</h2>
+      <input type="hidden" id="menu-id">
+      <div class="form-group">
+        <label for="menu-name">Nom</label>
+        <input type="text" id="menu-name" placeholder="Nom du menu" required>
+      </div>
+      <div class="form-group">
+        <label for="menu-price">Prix (&euro;)</label>
+        <input type="number" id="menu-price" step="0.10" min="0" placeholder="0.00" required>
+      </div>
+      <div class="form-group">
+        <label for="menu-category">Catégorie</label>
+        <select id="menu-category">
+          <option value="food">Nourriture</option>
+          <option value="beverage">Boisson</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="menu-color">Couleur</label>
+        <input type="color" id="menu-color" value="#ffffff">
+      </div>
+      <div class="form-group">
+        <label>Plats inclus</label>
+        <div id="menu-plates-checkboxes" class="checkboxes-list"></div>
+      </div>
+      <div class="modal-actions">
+        <button id="menu-cancel" class="btn btn-secondary">Annuler</button>
+        <button id="menu-save" class="btn btn-success">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/options.js"></script>
+</body>
+</html>

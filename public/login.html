@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Buvette UCC - Connexion</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="login-body">
+  <div class="login-container">
+    <h1>Buvette UCC</h1>
+    <form id="login-form">
+      <input type="text" id="username" placeholder="Nom d'utilisateur" autocomplete="username" required>
+      <input type="password" id="password" placeholder="Mot de passe" autocomplete="current-password" required>
+      <button type="submit" class="btn btn-primary btn-block">Connexion</button>
+      <p id="login-error" class="error-text" hidden></p>
+    </form>
+  </div>
+  <script src="/js/login.js"></script>
+</body>
+</html>
