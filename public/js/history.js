@@ -43,6 +43,8 @@ function renderOrders() {
       const name = i.plate_name || i.menu_name || 'Article supprimé';
       return `${i.quantity}x ${name}`;
     }).join(', ');
+    const payLabel = paymentLabel(order.payment_method);
+    const payClass = order.payment_method === 'card' ? 'pay-card' : order.payment_method === 'cash' ? 'pay-cash' : 'pay-none';
 
     return `
       <div class="order-card" data-id="${order.id}">
@@ -50,7 +52,10 @@ function renderOrders() {
           <span class="order-card-id">#${order.id}</span>
           <span class="order-card-total">${formatPrice(order.total)}</span>
         </div>
-        <div class="order-card-date">${formatDate(order.created_at)}</div>
+        <div class="order-card-date">
+          ${formatDate(order.created_at)}
+          <span class="pay-badge ${payClass}">${payLabel}</span>
+        </div>
         <div class="order-card-items">${esc(itemsDesc)}</div>
       </div>`;
   }).join('');
@@ -172,6 +177,12 @@ function formatPrice(n) {
   return n.toFixed(2).replace('.', ',') + ' \u20AC';
 }
 
+function paymentLabel(method) {
+  if (method === 'cash') return 'Espèces';
+  if (method === 'card') return 'Carte';
+  return 'N/A';
+}
+
 function formatDate(str) {
   const d = new Date(str);
   return d.toLocaleDateString('fr-FR', {
@@ -189,7 +200,7 @@ function esc(str) {
 document.getElementById('btn-export').addEventListener('click', () => {
   if (orders.length === 0) return;
   const sep = ';';
-  const lines = ['Commande' + sep + 'Date' + sep + 'Article' + sep + 'Quantité' + sep + 'Prix unitaire' + sep + 'Sous-total' + sep + 'Total commande'];
+  const lines = ['Commande' + sep + 'Date' + sep + 'Paiement' + sep + 'Article' + sep + 'Quantité' + sep + 'Prix unitaire' + sep + 'Sous-total' + sep + 'Total commande'];
   orders.forEach(order => {
     order.items.forEach(item => {
       const name = item.plate_name || item.menu_name || 'Article supprimé';
@@ -197,6 +208,7 @@ document.getElementById('btn-export').addEventListener('click', () => {
       lines.push(
         order.id + sep +
         order.created_at + sep +
+        paymentLabel(order.payment_method) + sep +
         '"' + name.replace(/"/g, '""') + '"' + sep +
         item.quantity + sep +
         item.unit_price.toFixed(2) + sep +

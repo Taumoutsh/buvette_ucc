@@ -225,7 +225,7 @@ document.getElementById('modal-cancel').addEventListener('click', () => {
   document.getElementById('modal-confirm').hidden = true;
 });
 
-document.getElementById('modal-confirm-btn').addEventListener('click', async () => {
+async function submitOrder(paymentMethod) {
   const items = currentOrder.map(item => ({
     plate_id: item.type === 'plate' ? item.id : null,
     menu_id: item.type === 'menu' ? item.id : null,
@@ -237,7 +237,7 @@ document.getElementById('modal-confirm-btn').addEventListener('click', async () 
     const res = await fetch(`${API}/api/orders`, {
       method: 'POST',
       headers,
-      body: JSON.stringify({ items })
+      body: JSON.stringify({ items, payment_method: paymentMethod })
     });
 
     if (res.ok) {
@@ -251,7 +251,10 @@ document.getElementById('modal-confirm-btn').addEventListener('click', async () 
   } catch {
     alert('Erreur réseau');
   }
-});
+}
+
+document.getElementById('modal-confirm-cash').addEventListener('click', () => submitOrder('cash'));
+document.getElementById('modal-confirm-card').addEventListener('click', () => submitOrder('card'));
 
 // Utilities
 function formatPrice(n) {

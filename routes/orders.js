@@ -25,21 +25,24 @@ router.get('/', (req, res) => {
 
 // Créer une commande
 router.post('/', (req, res) => {
-  const { items } = req.body;
+  const { items, payment_method } = req.body;
   if (!items || !items.length) {
     return res.status(400).json({ error: 'La commande doit contenir au moins un article' });
+  }
+  if (!['cash', 'card'].includes(payment_method)) {
+    return res.status(400).json({ error: 'Mode de paiement invalide' });
   }
 
   const db = getDb();
   const total = items.reduce((sum, item) => sum + item.unit_price * item.quantity, 0);
 
-  const insertOrder = db.prepare('INSERT INTO orders (total) VALUES (?)');
+  const insertOrder = db.prepare('INSERT INTO orders (total, payment_method) VALUES (?, ?)');
   const insertItem = db.prepare(
     'INSERT INTO order_items (order_id, plate_id, menu_id, quantity, unit_price) VALUES (?, ?, ?, ?, ?)'
   );
 
   const orderId = db.transaction(() => {
-    const result = insertOrder.run(total);
+    const result = insertOrder.run(total, payment_method);
     const orderId = result.lastInsertRowid;
     for (const item of items) {
       insertItem.run(orderId, item.plate_id || null, item.menu_id || null, item.quantity, item.unit_price);
@@ -47,7 +50,7 @@ router.post('/', (req, res) => {
     return orderId;
   })();
 
-  res.status(201).json({ id: orderId, total });
+  res.status(201).json({ id: orderId, total, payment_method });
 });
 
 // Modifier une commande

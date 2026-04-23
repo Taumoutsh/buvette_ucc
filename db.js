@@ -53,6 +53,7 @@ function initSchema() {
     CREATE TABLE IF NOT EXISTS orders (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       total REAL NOT NULL,
+      payment_method TEXT CHECK(payment_method IN ('cash', 'card')),
       created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
       updated_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
     );
@@ -78,6 +79,10 @@ function initSchema() {
   const menusCols = db.prepare("PRAGMA table_info(menus)").all().map(c => c.name);
   if (!menusCols.includes('color')) {
     db.exec("ALTER TABLE menus ADD COLUMN color TEXT NOT NULL DEFAULT '#ffffff'");
+  }
+  const ordersCols = db.prepare("PRAGMA table_info(orders)").all().map(c => c.name);
+  if (!ordersCols.includes('payment_method')) {
+    db.exec("ALTER TABLE orders ADD COLUMN payment_method TEXT CHECK(payment_method IN ('cash', 'card'))");
   }
 
   // Seed default user if not exists

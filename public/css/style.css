@@ -380,6 +380,13 @@ body {
   text-align: right;
 }
 
+.modal-payment-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
 .modal-actions {
   display: flex;
   flex-wrap: wrap;
@@ -451,6 +458,32 @@ body {
 
 .order-card-date {
   font-size: 0.8rem;
+  color: var(--text-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pay-badge {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.pay-cash {
+  background: #dcfce7;
+  color: var(--success-dark);
+}
+
+.pay-card {
+  background: #dbeafe;
+  color: var(--primary-dark);
+}
+
+.pay-none {
+  background: var(--bg);
   color: var(--text-light);
 }
 
